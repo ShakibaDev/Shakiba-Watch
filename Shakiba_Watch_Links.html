@@ -2,61 +2,141 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>Shakiba Watch Links</title>
+  <title>ساعت شکیبا</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
   <style>
+    :root {
+      --bg-color: #f7f7f7;
+      --card-bg: #ffffff;
+      --text-color: #000000;
+      --shadow: rgba(0,0,0,0.15);
+      --loader-bg: rgba(255,255,255,0.9);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: #121212;
+        --card-bg: #1e1e1e;
+        --text-color: #ffffff;
+        --shadow: rgba(0,0,0,0.6);
+        --loader-bg: rgba(0,0,0,0.9);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
+      margin: 0;
+      min-height: 100vh;
       font-family: sans-serif;
-      background:#f7f7f7;
+      background: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px;
       text-align:center;
-      padding:40px;
+    }
+
+    /* ✅ لوگو و نام برند */
+    .brand {
+      text-align: center;
+      margin-bottom: 25px;
+      animation: fadeDown 1s ease forwards;
+      opacity: 0;
+    }
+
+    .brand img {
+      width: 110px;
+      max-width: 60vw;
+      height: auto;
+    }
+
+    .brand-name {
+      margin-top: 10px;
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 1px;
     }
 
     h2 {
-      margin-bottom:25px;
+      margin-bottom: 20px;
+      font-size: clamp(18px, 4vw, 22px);
+      animation: fadeUp 1s ease 0.3s forwards;
+      opacity: 0;
     }
 
     a.button {
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      margin:15px auto;
-      padding:15px 20px;
-      background:#ffffff;
-      width:260px;
-      border-radius:12px;
-      text-decoration:none;
-      font-size:18px;
-      color:#000;
-      box-shadow:0 2px 6px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 320px;
+      margin: 10px 0;
+      padding: 14px 18px;
+      background: var(--card-bg);
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: clamp(15px, 4vw, 18px);
+      color: var(--text-color);
+      box-shadow: 0 3px 8px var(--shadow);
+      transition: transform .15s ease, opacity .4s ease;
+      animation: fadeUp 0.8s ease forwards;
+      opacity: 0;
+    }
+
+    a.button:nth-of-type(1) { animation-delay: .4s; }
+    a.button:nth-of-type(2) { animation-delay: .55s; }
+    a.button:nth-of-type(3) { animation-delay: .7s; }
+    a.button:nth-of-type(4) { animation-delay: .85s; }
+
+    a.button:active {
+      transform: scale(0.97);
     }
 
     a.button img {
-      width:28px;
-      height:28px;
+      width: 26px;
+      height: 26px;
     }
 
     /* ✅ لودینگ */
     #loader {
-      position:fixed;
-      inset:0;
-      background:rgba(255,255,255,0.9);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:999;
+      position: fixed;
+      inset: 0;
+      background: var(--loader-bg);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
     }
 
     .spinner {
-      width:40px;
-      height:40px;
-      border:4px solid #ccc;
-      border-top:4px solid #000;
-      border-radius:50%;
-      animation:spin 1s linear infinite;
+      width: 42px;
+      height: 42px;
+      border: 4px solid #999;
+      border-top: 4px solid var(--text-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
     }
 
     @keyframes spin {
-      100% { transform:rotate(360deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
   </style>
 
@@ -64,15 +144,15 @@
     function detectOS() {
       const ua = navigator.userAgent || navigator.vendor;
       if (/android/i.test(ua)) return "android";
-      if (/iPad|iPhone|iPod/.test(ua)) return "ios";
+      if (/iPhone|iPad|iPod/.test(ua)) return "ios";
       return "web";
     }
 
-    function openWithLoader(appLinks, webLink, storeLink) {
+    function openWithLoader(appLinks, webLink) {
       document.getElementById("loader").style.display = "flex";
 
       const os = detectOS();
-      let appLink = appLinks[os] || webLink;
+      const appLink = appLinks[os] || webLink;
 
       window.location = appLink;
 
@@ -89,9 +169,14 @@
     <div class="spinner"></div>
   </div>
 
+  <!-- ✅ برند -->
+  <div class="brand">
+    <img src="https://raw.githubusercontent.com/shakibadev/Shakiba-Watch/main/Logo/logo.jpg" alt="ساعت شکیبا">
+    <div class="brand-name">ساعت شکیبا</div>
+  </div>
+
   <h2>باز کردن با:</h2>
 
-  <!-- ✅ Neshan -->
   <a class="button" href="#" onclick="openWithLoader(
     { android: 'neshan://', ios: 'neshan://' },
     'https://nshn.ir/d4_bffOp_JSG4b'
@@ -100,7 +185,6 @@
     <img src="https://raw.githubusercontent.com/shakibadev/Shakiba-Watch/main/Logo/neshan.png">
   </a>
 
-  <!-- ✅ Instagram -->
   <a class="button" href="#" onclick="openWithLoader(
     {
       android: 'instagram://user?username=Shakiba_Watch',
@@ -112,7 +196,6 @@
     <img src="https://raw.githubusercontent.com/shakibadev/Shakiba-Watch/main/Logo/Instagram.png">
   </a>
 
-  <!-- ✅ Telegram -->
   <a class="button" href="#" onclick="openWithLoader(
     {
       android: 'tg://resolve?domain=Shakiba_Watch',
@@ -124,7 +207,6 @@
     <img src="https://raw.githubusercontent.com/shakibadev/Shakiba-Watch/main/Logo/Telegram.svg">
   </a>
 
-  <!-- ✅ Eitaa -->
   <a class="button" href="#" onclick="openWithLoader(
     {
       android: 'eitaa://user/Shakiba_Watch',
