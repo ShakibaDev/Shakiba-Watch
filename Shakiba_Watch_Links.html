@@ -55,6 +55,7 @@
       width: 110px;
       max-width: 60vw;
       height: auto;
+      border-radius: 150px;
     }
 
     .brand-name {
@@ -147,20 +148,25 @@
       if (/iPhone|iPad|iPod/.test(ua)) return "ios";
       return "web";
     }
-
+  
     function openWithLoader(appLinks, webLink) {
-      document.getElementById("loader").style.display = "flex";
-
+      const loader = document.getElementById("loader");
+      loader.style.display = "flex";
+  
       const os = detectOS();
       const appLink = appLinks[os] || webLink;
-
-      window.location = appLink;
-
+  
       setTimeout(() => {
-        window.location = webLink;
+        window.location.href = appLink;
+      }, 100);
+  
+      setTimeout(() => {
+        loader.style.display = "none";   // ✅ جلوگیری از گیر کردن
+        window.location.href = webLink;
       }, 1500);
     }
   </script>
+
 </head>
 
 <body>
